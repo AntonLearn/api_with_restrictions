@@ -10,7 +10,6 @@ from rest_framework.decorators import action
 
 class AdvertisementViewSet(ModelViewSet):
     """ViewSet для объявлений."""
-    # queryset = Advertisement.objects.exclude(status='DRAFT')
     serializer_class = AdvertisementSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = AdvertisementFilter
