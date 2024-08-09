@@ -1,0 +1,191 @@
+# 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d admin
+# cbc21f3f717db2cede8926d4f562949bb9b135d6 user1
+# 51d865f08f04fccc44cd4875f4b7a8db1fa5186a user2
+
+# примеры API-запросов
+
+@baseUrl = http://localhost:8000/api
+
+# получение всех объявлений любым пользователем
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+
+###
+
+# получение создателем объявлений всех нечерновиков
+# объявлений + всех своих черновиков объявлений
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
+
+###
+
+# создание объявления существующим пользователем 
+# с указанием соответствующего ему токена
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186a
+
+{
+  "title": "Шкаф IKEA",
+  "description": "Новое"
+}
+
+###
+
+# создание объявления несуществующим пользователем
+# с указанием несуществующего токена
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token _58370cfc3c7e39dcf7b5eac77c129dbdc94301f1
+
+{
+  "title": "Стул IKEA",
+  "description": "Срочно"
+}
+
+###
+# создание объявления админом с указанием  
+# токена админа
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
+
+{
+  "title": "Шкаф IKEA",
+  "description": "Новое"
+}
+###
+
+# создание объявления без указания какого либо 
+# токена
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+
+{
+  "title": "Стол IKEA",
+  "description": "Срочно"
+}
+
+###
+
+# обновление некоторых указанных в объявлении  
+# полей (title и status) с указанием токена
+# создателя объявления
+PATCH {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
+
+{
+  "title": "Шкаф IKEA прекрасный правка админом",
+  "status": "CLOSED"
+}
+
+###
+
+# обновление некоторых указанных в объявлении
+# полей (status) с указанием токена принадлежащего 
+# другому пользователю, 
+PATCH {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186
+
+{
+  "status": "OPEN"
+}
+
+###
+
+# обновление объявления (status) админом с
+# указанием токена админа
+PATCH {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
+
+{
+  "status": "OPEN"
+}
+
+###
+
+# фильтрация объявлений по создателю
+GET {{baseUrl}}/advertisements/?creator=1
+Content-Type: application/json
+
+###
+
+# фильтрация объявлений по дате
+GET {{baseUrl}}/advertisements/?created_at_after=2020-10-01
+Content-Type: application/json
+
+###
+
+# фильтрация объявлений по статусу
+GET {{baseUrl}}/advertisements/?status=OPEN
+Content-Type: application/json
+
+###
+
+# удаление объявления с указанием токена
+# создателя объявления 
+DELETE {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
+
+###
+
+# удаление объявления с указанием токена 
+# принадлежащего другому пользователю
+DELETE {{baseUrl}}/advertisements/3/
+Content-Type: application/json
+Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186a
+
+###
+
+# удаление объявления админом с указанием 
+# токена админа
+DELETE {{baseUrl}}/advertisements/3/
+Content-Type: application/json
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
+
+###
+
+# отправка объявления в избранное любым 
+# пользователем кроме создателя объявления 
+# с указанием принадлежащего пользователю токена 
+PUT {{baseUrl}}/advertisements/5/mark_as_favorite/
+Content-Type: application/json
+Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186a
+
+###
+
+# отправка объявления в избранное создателем
+# объявления с указанием принадлежащего 
+# создателю объявления токена 
+PUT {{baseUrl}}/advertisements/4/mark_as_favorite/
+Content-Type: application/json
+Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
+
+###
+
+# отправка объявления в избранное несуществующим 
+# пользователем с указанием несуществующего токена
+PUT {{baseUrl}}/advertisements/12/mark_as_favorite/
+Content-Type: application/json
+Authorization: Token _9f0b49530d79ab0fb7cdd8c58e6ebda773e90217
+
+###
+
+# отправка админом объявления в избранное с
+# указанием токена админа
+PUT {{baseUrl}}/advertisements/4/mark_as_favorite/
+Content-Type: application/json
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
+
+###
+
+# фильтрация избранных объявлений пользователя c
+# указанием токена пользователя
+GET {{baseUrl}}/advertisements/favorite_advertisements/
+Content-Type: application/json
+Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186a
