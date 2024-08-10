@@ -7,6 +7,7 @@
 @baseUrl = http://localhost:8000/api
 
 # получение всех объявлений любым пользователем
+# без указания токена
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
 
@@ -17,6 +18,13 @@ Content-Type: application/json
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
 Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
+###
+
+# получение админом всех нечерновиков
+# объявлений + всех своих черновиков объявлений
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
 
 ###
 
@@ -24,7 +32,7 @@ Authorization: Token cbc21f3f717db2cede8926d4f562949bb9b135d6
 # с указанием соответствующего ему токена
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
-Authorization: Token 51d865f08f04fccc44cd4875f4b7a8db1fa5186a
+Authorization: Token 5d1fba76e5e8cb70686a952b99e02a687d6f6b2d
 
 {
   "title": "Шкаф IKEA",
